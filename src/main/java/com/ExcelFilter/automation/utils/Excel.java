@@ -1,5 +1,4 @@
 package com.ExcelFilter.automation.utils;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -15,14 +14,14 @@ import java.util.Set;
 import java.util.TreeMap;
 
 public class Excel {
+
     public static String getFilePath() {
-        //String filePath = "Resource/DataPrueba.xlsx";
-        String filePath = "Resource/Data.xlsx";
+        String filePath = "Resource/ListadoTotalOktaAP.xlsx";
         return filePath;
     }
 
     public static String getSheetName() {
-        String sheetName = "Data";
+        String sheetName = "PasswordHealthReport_phr12iqt37";
         return sheetName;
     }
 
@@ -261,8 +260,9 @@ public class Excel {
                 }
             }
         }
-        FileOutputStream out = new FileOutputStream("Resource/DataFinal.xlsx");
+        FileOutputStream out = new FileOutputStream("Resource/ListadoTotalOktaAP_Filtrado.xlsx");
         workbook.write(out);
         out.close();
+        System.out.println("------------> EXCEL CREADO: ListadoTotalOktaAP_Filtrado <------------");
     }
 }

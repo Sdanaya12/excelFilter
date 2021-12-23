@@ -7,6 +7,7 @@ import net.thucydides.core.annotations.Step;
 import java.io.IOException;
 
 public class RegisterPageSteps {
+
     RegisterPage registerPage = new RegisterPage();
     public RegisterPageSteps() throws IOException {
     }

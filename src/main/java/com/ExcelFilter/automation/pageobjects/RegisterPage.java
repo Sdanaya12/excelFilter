@@ -1,6 +1,5 @@
 package com.ExcelFilter.automation.pageobjects;
 
-import com.demoWinium.automation.models.DataInjection;
 import com.ExcelFilter.automation.utils.Excel;
 import com.ExcelFilter.automation.utils.Times;
 import net.serenitybdd.core.pages.PageObject;
@@ -8,7 +7,6 @@ import net.serenitybdd.core.pages.PageObject;
 import java.io.IOException;
 
 public class RegisterPage extends PageObject {
-    Excel dataInjection = new Excel();
 
     public RegisterPage() throws IOException {
 

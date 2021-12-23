@@ -1,4 +1,4 @@
-package com.demoWinium.automation.models;
+package com.ExcelFilter.automation.models;
 
 import com.ExcelFilter.automation.utils.Excel;
 
@@ -15,7 +15,6 @@ public class DataInjection {
         return sheetName;
     }
 
-    //Acá realizar métodos de filtrado
     public void data(int contFilas, int contColumnas) throws IOException {
         System.out.println("Filas: "+contFilas+", Columnas: "+contColumnas);
         String[][] data = Excel.excelFile();
