@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class Excel {
+public class ExcelOkta {
 
     public static String getFilePath() {
         String filePath = "Resource/ListadoTotalOktaAP.xlsx";
@@ -46,7 +46,7 @@ public class Excel {
     }
 
     public static String firstFilter() {
-        String firtsFilter = "demo.datacredito.com.co";
+        String firtsFilter = "demo.";
         return firtsFilter;
     }
 
@@ -60,7 +60,7 @@ public class Excel {
     public static String [] thirdFilter() {
         String [] thirdFilter = new String[2];
         thirdFilter [0] = "2-";
-        thirdFilter [1] = "88888888";
+        thirdFilter [1] = "8888888";
         return thirdFilter;
     }
 
@@ -89,7 +89,7 @@ public class Excel {
         return fourthSeparation;
     }
 
-    public static String[][] excelFile() throws IOException {
+    public static String[][] excelFile_Okta() throws IOException {
 
         FileInputStream documento = new FileInputStream(getFilePath());
         XSSFWorkbook workbook = new XSSFWorkbook(documento);
@@ -104,7 +104,7 @@ public class Excel {
 
         String data;
         String [][] dataDinamica  = new String [contRow][contColumn];
-        System.out.println("------------> EXCEL ORIGINAL <------------");
+        System.out.println("------------> EXCEL ORIGINAL: Okta <------------");
         System.out.println("Data Original -> Filas: "+contRow+" ,Columnas: "+contColumn);
         for (int i = 0 ; i < contRow ; i++ ) {
             ii++;
@@ -123,17 +123,17 @@ public class Excel {
         return dataDinamica;
     }
 
-    public static String[][] excelFilter() throws IOException{
+    public static String[][] excelFilter_Okta() throws IOException, InterruptedException{
 
         String firtsFilter = firstFilter();
         String [] secondFilter = secondFilter();
         String [] thirdFilter = thirdFilter();
         String fourthFilter = fourthFilter();
-        String [][] data = excelFile();
+        String [][] data = excelFile_Okta();
         int contRow = data.length, contColumn = data[0].length;
         int columnUser = columnUser(),columnLogin = columnLogin(), columnStatus = columnStatus(), contFilter = 0;
         String [][] dataFilter = new String[contRow][contColumn];
-        System.out.println("------------> EXCEL FILTRADO <------------");
+        System.out.println("------------> EXCEL FILTRADO: Okta <------------");
         for (int i = 0 ; i < contRow ; i++ ) {
             if(data[i][columnLogin].contains(firtsFilter)){
                 if (data[i][columnStatus].contains(secondFilter[0]) || data[i][columnStatus].contains(secondFilter[1])){
@@ -152,16 +152,23 @@ public class Excel {
             }
         }
         System.out.println("Data Filtrada -> Filas: "+contFilter+" ,Columnas: "+contColumn);
-        excelSeparation_Id(contFilter, contColumn, dataFilter);
-        return dataFilter;
+        String [][] newDataFilter = new String[contFilter][contColumn];
+        for (int i =0; i<contFilter;i++){
+            for (int j=0; j<contColumn; j++){
+                newDataFilter[i][j]=dataFilter[i][j];
+            }
+        }
+        return newDataFilter;
     }
 
-    public static void excelSeparation_Id(int contRow, int contColumn, String [][] dataFilter) throws IOException {
+    public static String [][] excelSeparation_Id() throws IOException, InterruptedException {
 
-        System.out.println("------------> EXCEL SEPARADO <------------");
+        String [][] dataFilter = excelFilter_Okta();
+        int contRow = dataFilter.length, contColumn = dataFilter[0].length;
+        System.out.println("------------> EXCEL SEPARADO: Okta <------------");
         System.out.println("Data separada -> Filas: "+contRow+" ,Columnas: "+contColumn);
         String firtsSeparation = firtsSeparation(), secondSeparation = secondSeparation();
-        int columnLogin = columnLogin();
+        int columnLogin = columnLogin(), cont = 0;
         for (int i=0; i<contRow; i++){
             for (int j=0; j<contColumn; j++){
                 if(columnLogin == j){
@@ -173,17 +180,16 @@ public class Excel {
                 }
             }
         }
-        System.out.println("------------> EXCEL ORGANIZADO <------------");
+        System.out.println("------------> EXCEL ORGANIZADO: Okta <------------");
         System.out.println("Data Organizada -> Filas: "+contRow+" ,Columnas: "+contColumn);
-        for (int i=0; i<contRow; i++) {
-            //System.out.println(dataFilter[i][0]+" || "+dataFilter[i][1]+" || "+dataFilter[i][2]);
-        }
-        excelSeparation_LastLogin(contRow, contColumn, dataFilter);
+        return dataFilter;
     }
 
-    public static void excelSeparation_LastLogin(int contRow, int contColumn, String [][] dataFilter) throws IOException {
+    public static String[][] excelSeparation_LastLogin() throws IOException, InterruptedException {
         int columnLastLogin = columnLastLogin(), contSeparation = 0;
-        System.out.println("------------> EXCEL ORGANIZADO: LastLogin vacío <------------");
+        String [][] dataFilter = excelSeparation_Id();
+        int contRow = dataFilter.length, contColumn = dataFilter[0].length;
+        System.out.println("------------> EXCEL ORGANIZADO: Okta: LastLogin vacío <------------");
         String[][] dataSeparationLastLogin = new String[contRow][contColumn];
         String thirdSeparation = thirdSeparation();
         for (int i=0; i<contRow; i++){
@@ -195,22 +201,31 @@ public class Excel {
             }
         }
         System.out.println("Data LastLogin -> Filas: "+contSeparation+" ,Columnas: "+contColumn);
-
+        String [][] newDataSeparationLastLogin = new String[contSeparation][contColumn];
         for (int i=0; i<contSeparation; i++){
             for (int j=0; j<contColumn; j++) {
                 if(columnLastLogin == j){
                     String [] dateSeparation = dataSeparationLastLogin[i][columnLastLogin].split(thirdSeparation);
                     dataSeparationLastLogin[i][j] = dateSeparation[0];
+
                 }
                 //System.out.println(dataSeparationLastLogin[i][j]);
             }
         }
-        excelDateComparison(contSeparation, contColumn, dataSeparationLastLogin);
+
+        for (int i =0; i<contSeparation;i++){
+            for (int j=0; j<contColumn; j++){
+                newDataSeparationLastLogin[i][j] = dataSeparationLastLogin[i][j];
+            }
+        }
+        return newDataSeparationLastLogin;
     }
 
-    public static void excelDateComparison(int contRow, int contColumn, String [][] dataFilterSeparated ) throws IOException {
+    public static String[][] excelDateComparison() throws IOException, InterruptedException {
+        String [][] dataFilterSeparated = excelSeparation_LastLogin();
+        int contRow = dataFilterSeparated.length, contColumn = dataFilterSeparated[0].length;
         int columnLastLogin = columnLastLogin(),fourthSeparation = fourthSeparation(), columnComparison = contColumn+1, contCandidates = 0;
-        System.out.println("------------> EXCEL ORGANIZADO: Comparación de fechas <------------");
+        System.out.println("------------> EXCEL ORGANIZADO: Okta: Comparación de fechas <------------");
         String [][] dataComparison = new String[contRow][columnComparison];
 
         for (int i=0; i<contRow; i++){
@@ -231,9 +246,10 @@ public class Excel {
         }
         saveExcel(contCandidates, dataComparison);
         System.out.println("Data Comparison -> Filas: "+contCandidates+" ,Columnas: "+columnComparison);
+        return dataComparison;
     }
 
-    public static void saveExcel(int contRow, String [][] dataSave) throws IOException {
+    public static void saveExcel(int contRow, String [][] dataSave) throws IOException, InterruptedException{
         int contData = 2;
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Datos Filtrados");
@@ -263,6 +279,6 @@ public class Excel {
         FileOutputStream out = new FileOutputStream("Resource/ListadoTotalOktaAP_Filtrado.xlsx");
         workbook.write(out);
         out.close();
-        System.out.println("------------> EXCEL CREADO: ListadoTotalOktaAP_Filtrado <------------");
+        System.out.println("------------> EXCEL CREADO: Okta: ListadoTotalOktaAP_Filtrado <------------");
     }
 }

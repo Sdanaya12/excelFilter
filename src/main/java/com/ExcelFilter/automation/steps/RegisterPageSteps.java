@@ -13,18 +13,22 @@ public class RegisterPageSteps {
     }
 
     @Step
-    public void openExcel() throws InterruptedException, IOException {
-        registerPage.ReadExcel();
+    public void openExcel_Okta() throws InterruptedException, IOException {
+        registerPage.ReadExcel_Okta();
+        Times.waitFor(1000);
+        registerPage.ExcelFilter_Okta();
         Times.waitFor(1000);
     }
     @Step
-    public void filterExcel() throws InterruptedException, IOException {
-        registerPage.ExcelFilter();
+    public void openExcel_ICBCLA() throws InterruptedException, IOException {
+        registerPage.ReadExcel_ICBCLA();
+        Times.waitFor(1000);
+        registerPage.ExcelFilter_ICBCLA();
         Times.waitFor(1000);
     }
     @Step
     public void saveExcel() throws InterruptedException, IOException {
-
+        registerPage.ExcelVersus();
         Times.waitFor(1000);
     }
 }

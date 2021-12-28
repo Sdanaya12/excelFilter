@@ -1,6 +1,8 @@
 package com.ExcelFilter.automation.pageobjects;
 
-import com.ExcelFilter.automation.utils.Excel;
+import com.ExcelFilter.automation.utils.ExcelICBCLA;
+import com.ExcelFilter.automation.utils.ExcelDataCrossover;
+import com.ExcelFilter.automation.utils.ExcelOkta;
 import com.ExcelFilter.automation.utils.Times;
 import net.serenitybdd.core.pages.PageObject;
 
@@ -11,14 +13,30 @@ public class RegisterPage extends PageObject {
     public RegisterPage() throws IOException {
 
     }
-
-    public void ReadExcel() throws InterruptedException, IOException {
-        Excel.excelFile();
+    public void ReadExcel_Okta() throws InterruptedException, IOException {
+        ExcelOkta.excelFile_Okta();
+        Times.waitFor(2000);
+    }
+    public void ReadExcel_ICBCLA() throws InterruptedException, IOException {
+        ExcelICBCLA.excelFile_ICBCLA();
+        Times.waitFor(1000);
+    }
+    public void ExcelFilter_Okta() throws InterruptedException, IOException {
+        ExcelOkta.excelFilter_Okta();
+        ExcelOkta.excelSeparation_Id();
+        ExcelOkta.excelSeparation_LastLogin();
+        ExcelOkta.excelDateComparison();
         Times.waitFor(2000);
     }
 
-    public void ExcelFilter() throws InterruptedException, IOException {
-        Excel.excelFilter();
+    public void ExcelFilter_ICBCLA() throws InterruptedException, IOException {
+        ExcelICBCLA.excelFilter_ICBCLA();
+        ExcelICBCLA.excelConvertDate_ICBCLA();
+        Times.waitFor(2000);
+    }
+
+    public void ExcelVersus() throws InterruptedException, IOException {
+        ExcelDataCrossover.excelComparison();
         Times.waitFor(2000);
     }
 }

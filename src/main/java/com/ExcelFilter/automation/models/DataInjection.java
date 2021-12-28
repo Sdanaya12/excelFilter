@@ -1,6 +1,5 @@
 package com.ExcelFilter.automation.models;
-
-import com.ExcelFilter.automation.utils.Excel;
+import com.ExcelFilter.automation.utils.ExcelOkta;
 
 import java.io.IOException;
 
@@ -17,7 +16,7 @@ public class DataInjection {
 
     public void data(int contFilas, int contColumnas) throws IOException {
         System.out.println("Filas: "+contFilas+", Columnas: "+contColumnas);
-        String[][] data = Excel.excelFile();
+        String[][] data = ExcelOkta.excelFile_Okta();
         String[] infoCell = new String[contColumnas];
         for (int i=0; i<contFilas; i++ ){
             for (int j=0; j<contColumnas;j++){
