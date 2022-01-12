@@ -27,7 +27,7 @@ public class RegisterPageSteps {
         Times.waitFor(1000);
     }
     @Step
-    public void saveExcel() throws InterruptedException, IOException {
+    public void excelCrossover() throws InterruptedException, IOException {
         registerPage.ExcelVersus();
         Times.waitFor(1000);
     }

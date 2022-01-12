@@ -61,22 +61,12 @@ public class ExcelICBCLA {
         return firtsFilter;
     }
 
-    public static String firstSeparation() {
-        String firstSeparation = "E";
-        return firstSeparation;
+    public static String addChart(){
+        String addChart = "-";
+        return addChart;
     }
 
-    public static String secondSeparation() {
-        String secondSeparation = ",";
-        return secondSeparation;
-    }
-
-    public static String thirdSeparation() {
-        String secondSeparation = ".";
-        return secondSeparation;
-    }
-
-    public static String[][] excelFile_ICBCLA() throws IOException, InterruptedException {
+    public static String[][] excelFile_ICBCLA() throws IOException {
 
         FileInputStream documento = new FileInputStream(getFilePath());
         XSSFWorkbook workbook = new XSSFWorkbook(documento);
@@ -90,8 +80,8 @@ public class ExcelICBCLA {
         Cell cell;
         String data;
         String [][] dataDinamica  = new String [contRow][contColumn];
-        System.out.println("------------> EXCEL ORIGINAL: ICBCLA <------------");
-        System.out.println("Data Original -> Filas: "+contRow+" ,Columnas: "+contColumn);
+        //System.out.println("------------> EXCEL ORIGINAL: ICBCLA <------------");
+        //System.out.println("Data Original -> Filas: "+contRow+" ,Columnas: "+contColumn);
         for (int i = 0 ; i < contRow ; i++ ) {
             ii++;
             row = sheet.getRow(ii);
@@ -109,7 +99,7 @@ public class ExcelICBCLA {
         return dataDinamica;
     }
 
-    public static String[][] excelFilter_ICBCLA() throws IOException, InterruptedException {
+    public static String[][] excelFilter_ICBCLA() throws IOException{
 
         String [][] data = excelFile_ICBCLA();
         int firtsFilter = firstFilter();
@@ -117,7 +107,7 @@ public class ExcelICBCLA {
         int columnSuscriptor = columnSuscriptor(), columnClave = columnClave(), columnBloqueo = columnBloqueo(), contFilter = 0;
         int columnNombre = columnNombre(), columnLastUtil = columnLastUtil(), columnId = columnId();
         String [][] dataFilter = new String[contRow][contColumn];
-        System.out.println("------------> EXCEL FILTRADO: ICBCLA <------------");
+        //System.out.println("------------> EXCEL FILTRADO: ICBCLA <------------");
         for (int i = 0 ; i < contRow ; i++ ) {
             int dataBlock = Integer.parseInt(data[i][columnBloqueo]);
             if(dataBlock == firtsFilter ){
@@ -143,18 +133,15 @@ public class ExcelICBCLA {
                 }
             }
         }
-        System.out.println("Data Filtrada -> Filas: "+contFilter+" ,Columnas: "+contColumn);
+        //System.out.println("Data Filtrada -> Filas: "+contFilter+" ,Columnas: "+contColumn);
         return newDataFilter;
     }
 
-    public static String[][] excelConvertDate_ICBCLA() throws IOException, InterruptedException {
+    public static String[][] excelConvertDate_ICBCLA() throws IOException{
         char charToAdd = '-';
         String[][] data = excelFilter_ICBCLA();
+        String date= addChart();
         int contRow = data.length, contColumn = data[0].length, columnLastUtil = 4;
-        String date="";
-        String [][] dataConvertDate = new String[contRow][contColumn];
-        System.out.println("------------> EXCEL CONVERSIÓN FECHA: ICBCLA <------------");
-        System.out.println("Data Filtrada -> Filas: "+contRow+" ,Columnas: "+contColumn);
         for (int i = 0 ; i < contRow ; i++ ) {
             for (int j = 0; j<contColumn;j++){
                 String dataDate = data[i][columnLastUtil];
@@ -164,10 +151,10 @@ public class ExcelICBCLA {
             data[i][columnLastUtil] = date;
         }
         saveExcel(contRow, data);
-        return dataConvertDate;
+        return data;
     }
 
-    public static void saveExcel(int contRow, String [][] dataSave) throws IOException, InterruptedException{
+    public static void saveExcel(int contRow, String [][] dataSave) throws IOException{
         int contData = 2;
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Datos Filtrados");

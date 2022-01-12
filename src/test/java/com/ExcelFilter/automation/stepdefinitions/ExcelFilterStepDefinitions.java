@@ -24,6 +24,6 @@ public class ExcelFilterStepDefinitions {
 
     @Then("You should see the document properly filtered")
     public void you_should_see_the_document_properly_filtered() throws IOException, InterruptedException {
-
+        registerPageSteps.excelCrossover();
     }
 }
